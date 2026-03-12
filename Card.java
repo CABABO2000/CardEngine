@@ -6,11 +6,14 @@ import java.io.IOException;
 import java.util.*;
 
 // User Zach Scrivena(https://stackoverflow.com/users/20029/zach-scrivena) posted a response to this thread: https://stackoverflow.com/questions/500891/generating-an-image-with-data-fields-using-java
-// which I've used as a reference.
+// which I've used as a reference and a starting point.
 
+
+// "https://drive.google.com/uc?export=download&id=1HMHhPj290ICULgHcH0mLeWA_t8DeEYvT" URL for card background.
 public class Card{
 	
-	private String url = new String("");
+	private String urlart = new String("");
+	private String urlback = new String("");
 	private String[] identity = new String[2];
 	private String[] stats = new String[3];
 	private String text = new String("");
@@ -19,12 +22,18 @@ public class Card{
 	private int count = 0;
 	
 	public Card(){
-		url = "https://drive.google.com/uc?export=download&id=1HMHhPj290ICULgHcH0mLeWA_t8DeEYvT"; // defaults to the standard card background.
-		String[] identity = {"NAME", "SPECIES"};
-		String[] stats = {"0", "0", "0"};
+		this(null, null, null, null, null, 0, null);
 	}
 	
-	public Card(String[] indentity, String[] stats, String text, String author, String set, int count){
+	public Card(String[] identity, String[] stats, String text, String author, String set, int count, String url){
+		
+		setURLBack(url);
+		setIdentity(identity);
+		setStats(stats);
+		setText(text);
+		setAuthor(author);
+		setSet(set);
+		setCount(count);
 		
 	}
 	
@@ -35,7 +44,7 @@ public class Card{
 	public BufferedImage getCardBackgroundImage(){
 		
 		try{
-			URL card_background_link = new URL(this.url);
+			URL card_background_link = new URL(this.urlback);
 			return ImageIO.read(card_background_link);
 		} catch(MalformedURLException mue) {
 			IO.print("Please provide a URL");
@@ -46,12 +55,12 @@ public class Card{
 		return null;
 	}
 	
-	public String getURL(){
-		if(this.url == null){
-			this.url = "";
+	public String getURLBack(){
+		if(this.urlback == null){
+			this.urlback = "";
 		}
 		
-		return this.url;
+		return this.urlback;
 	}
 	
 	public String[] getIdentity(){
@@ -94,6 +103,13 @@ public class Card{
 		return statscopy;
 	}
 	
+	public String getText(){
+		
+		String textcopy = new String(text);
+		
+		return textcopy.toLowerCase();
+	}
+	
 	public String getAuthor(){
 		
 		String authorcopy = new String(author);
@@ -116,20 +132,18 @@ public class Card{
 	 *	 The Setters
 	 */
 	 
-	 public String setURL(String url){
+	public void setURLBack(String url){
 		 
 		try{
 			URL urltest = new URL(url);
 		} catch(MalformedURLException mue) {
 			IO.print("Please provide a valid URL");
-			return "";
 		}
 		
-		 return url;
+		 this.urlback = url;
 	 }
 	 
-	 public String[] setIdentity(String[] identity){
-		 
+	public void setIdentity(String[] identity){
 		if(identity == null){
 			for(int i = 0; i < identity.length; i++){
 				identity[i] = "";
@@ -141,51 +155,81 @@ public class Card{
 		if(identity[1] == null){
 			identity[1] = "";
 		}
-		 
-		 return identity;
+		 this.identity = identity;
 	 }
 	 
-	 public String[] setStats(String[] stats){
+	public void setStats(String[] stats){
 		 
 		if(stats == null){
 			for(int i = 0; i < stats.length; i++){
 				stats[i] = "0";
 			}
 		}
-		if(this.stats[0] == null){
+		if(stats[0] == null){
 			stats[0] = "0";
 		}
-		if(this.stats[1] == null){
+		if(stats[1] == null){
 			stats[1] = "0";
 		}
-		if(Integer.parseInt(this.stats[2]) < 0){
+		if(stats[2] == null || Integer.parseInt(stats[2]) < 0){
 			stats[2] = "0";
 		}
-		 return stats;
+		 this.stats = stats;
 	 }
 	 
-	 public String setAuthor(String author){
+	public void setStats(int atk, int hp, String bld){
+		
+		if(hp > 0){
+			hp = 0;
+		}
+		if(atk > 0){
+			atk = 0;
+		}
+		if(bld == null){
+			bld = "0";
+		}
+		
+		this.stats[0] = "" + atk;
+		this.stats[1] = "" + hp;
+		this.stats[2] = bld;
+	 }
+	 
+	public void setText(String text){
+		 if(text == null){
+			 text = "This card does nothing.";
+		 }
+		 
+		 this.text = text;
+	 }
+	 
+	public void setAuthor(String author){
 		 if(author == null){
 			 author = "John Anonymous";
 		 }
 		 
-		 return author;
+		 this.author = author;
 	 }
 	 
-	 public String setSet(String set){
+	public void setSet(String set){
 		 if(set == null){
 			 set = "IRL";
 		 }
 		 
-		 return set;
+		 this.set = set;
 	 }
 	 
-	 public int setCount(int count){
+	public void setCount(int count){
 		 if(count < 0){
 			 count = 0;
 		 }
 		 
-		 return count;
+		 this.count = count;
 	 }
+	 
+	public String toString(){
+		
+		return identity[0] + " : -Type; " + identity[1] + " -Stats; (" + this.stats[0] + ", " + this.stats[1] + ", " + this.stats[2] + ") -Text; " + this.text + " -Author; " + this.author + " -Set; " + set + " -Count; " + count;
+		
+	}
 	
 }
