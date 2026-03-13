@@ -4,6 +4,7 @@ import java.awt.image.*;
 import javax.imageio.*;
 import java.util.*;
 import java.io.*;
+import java.awt.font.*;
 
 // https://docs.oracle.com/javase/tutorial/2d/images/drawonimage.html referencing java tutorial
 // https://docs.oracle.com/javase/tutorial/2d/images/saveimage.html
@@ -13,19 +14,10 @@ public class CardEngine{
 		String[] teststats = {"2", "2", "2"};
 		String[] testidentity = {"Test", "TestType"};
 		
-		Card test = new Card(testidentity, teststats, "This card does nothing.", "Joshua Tenbusch", "TS", 0, "https://drive.google.com/uc?export=download&id=1HMHhPj290ICULgHcH0mLeWA_t8DeEYvT");
+		Card test = new Card(testidentity, teststats, "This card does nothing. And nothing is nothing but doing nothing", "Joshua Tenbusch", "TS", 0, "https://drive.google.com/uc?export=download&id=1HMHhPj290ICULgHcH0mLeWA_t8DeEYvT");
 		
-		test.getCardBackgroundImage().createGraphics().drawString(test.getText(), -80, 40);
+		test.outputCardImage();
 		
-		File meep = new File("test.png");
-		
-		test.getCardBackgroundImage().createGraphics().drawString(test.getText(), -80, 40);
-		
-		//try{
-			//ImageIO.write(test.getCardBackgroundImage().createGraphics(), ".png", meep); //to fix
-		//}catch(IOException ioe){
-			
-		//}
 	}
 	
 }
