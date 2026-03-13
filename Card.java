@@ -47,6 +47,40 @@ public class Card{
 		
 	}
 	
+	// Outputs an image representing the card for use in tabletop simulator
+	// font to be fixed
+	// card art to be added.
+	
+	public void outputCardImage(){
+		
+		BufferedImage bi = getCardBackgroundImage();
+		Graphics2D g2 = bi.createGraphics();
+		
+		g2.setFont(getTextFont());
+		g2.setColor(Color.BLACK);
+		for(int i = 0; i < 6; i++){
+			g2.drawString(correctText(getText())[i], 235, 853 + (i * 45));
+		}
+		
+		g2.setFont(getTypeFont());
+		g2.drawString(padString(getIdentity()[1], 56), 110, 120);
+		
+		g2.setFont(getNameFont());
+		g2.drawString(padString(getIdentity()[0], 26), 70, 78);
+		
+		g2.setFont(getStatsFont());
+		g2.drawString(getStats()[0], 88, 920);
+		g2.drawString(getStats()[0], 88, 1090);
+		g2.drawString(getStats()[0], 88, 1260);
+		
+		try{
+			ImageIO.write(bi, "png", new File("output/image/" + getIdentity()[0] + ".png"));
+		}catch(IOException ioe){
+		
+		}
+			
+	}
+	
 	// a primitive text wrap adapted to be used in outputCard
 	
 	public String[] correctText(String text){
@@ -61,7 +95,7 @@ public class Card{
 		int k = 0;
 		
 		while(j < text.length()){
-			while(j < text.length() && i < 41){
+			while(j < text.length() && i < 35){
 				at = text.charAt(j) + "";
 				line = line + at;
 				i++;
@@ -76,38 +110,19 @@ public class Card{
 		return newtext;
 	}
 	
-	// Outputs an image representing the card for use in tabletop simulator
-	// font to be fixed
-	// card art to be added.
-	
-	public void outputCardImage(){
+	public String padString(String str, int maxwidth){
 		
-		BufferedImage bi = getCardBackgroundImage();
-		Graphics2D g2 = bi.createGraphics();
+		String copystr = str;
+		int halfwidth = (maxwidth - str.length())/2;
 		
-		g2.setFont(getTextFont());
-		g2.setColor(new Color(0, 0, 0));
-		for(int i = 0; i < 6; i++){
-			g2.drawString(correctText(getText())[i], 235, 853 + (i * 45));
+		for(int i = 0; i < halfwidth - 1; i++){
+			copystr = " " + copystr;
+		}
+		for(int i = 0; i < halfwidth; i++){
+			copystr = copystr + " ";
 		}
 		
-		g2.setFont(getTypeFont());
-		g2.drawString(getIdentity()[1], 110, 120);
-		
-		g2.setFont(getNameFont());
-		g2.drawString(getIdentity()[0], 70, 78);
-		
-		g2.setFont(getStatsFont());
-		g2.drawString(getStats()[0], 88, 920);
-		g2.drawString(getStats()[0], 88, 1090);
-		g2.drawString(getStats()[0], 88, 1260);
-		
-		try{
-			ImageIO.write(bi, "png", new File("output/" + getIdentity()[0] + ".png"));
-		}catch(IOException ioe){
-		
-		}
-			
+		return copystr;
 	}
 	
 	/*
@@ -315,50 +330,31 @@ public class Card{
 		 this.count = count;
 	 }
 	 
-	// https://docs.oracle.com/javase/tutorial/2d/text/textattributes.html
+	// https://www.dafont.com/basis33.font
 	public void setTextFont(){
-		Map<TextAttribute, Object> fontmap = new Hashtable<TextAttribute, Object>();
-		
-		// Attributes to put on
-		fontmap.put(TextAttribute.SIZE, 40);
-		fontmap.put(TextAttribute.FAMILY, "SANS");
-		
-		this.textfont = textfont.deriveFont(fontmap);
+		this.textfont = new Font("basis33", 0, 45);
 	}
 	
 	public void setTypeFont(){
-		Map<TextAttribute, Object> fontmap = new Hashtable<TextAttribute, Object>();
-		
-		// Attributes to put on
-		fontmap.put(TextAttribute.SIZE, 20);
-		fontmap.put(TextAttribute.FAMILY, "SANS");
-		
-		this.typefont = typefont.deriveFont(fontmap);
+		this.typefont = new Font("basis33", 0, 34);
 	}
 	
 	public void setStatsFont(){
-		Map<TextAttribute, Object> fontmap = new Hashtable<TextAttribute, Object>();
-		
-		// Attributes to put on
-		fontmap.put(TextAttribute.SIZE, 100);
-		fontmap.put(TextAttribute.FAMILY, "SANS");
-		
-		this.statsfont = statsfont.deriveFont(fontmap);
+		this.statsfont = new Font("basis33", 0, 120);
 	}
 	 
 	public void setNameFont(){
-		Map<TextAttribute, Object> fontmap = new Hashtable<TextAttribute, Object>();
-		
-		// Attributes to put on
-		fontmap.put(TextAttribute.SIZE, 60);
-		fontmap.put(TextAttribute.FAMILY, "SANS");
-		
-		this.namefont = namefont.deriveFont(fontmap);
+		this.namefont = new Font("basis33", 0, 80);
 	}
+	
+	/*
+	 *	toString
+	 */
+	
 	
 	public String toString(){
 		
-		return identity[0] + " : -Type; " + identity[1] + " -Stats; (" + this.stats[0] + ", " + this.stats[1] + ", " + this.stats[2] + ") -Text; " + this.text + " -Author; " + this.author + " -Set; " + set + " -Count; " + count;
+		return identity[0] + ":  -Type; " + identity[1] + "  -Stats; (" + this.stats[0] + ", " + this.stats[1] + ", " + this.stats[2] + ")  -Text; " + this.text + "  -Author; " + this.author + "  -Set; " + set + "  -Count; " + count;
 		
 	}
 	
