@@ -74,7 +74,7 @@ public class Card{
 		g2.drawString(getStats()[0], 88, 1260);
 		
 		try{
-			ImageIO.write(bi, "png", new File("output/image/" + getIdentity()[0] + ".png"));
+			ImageIO.write(bi, "png", new File(getIdentity()[0] + ".png"));
 		}catch(IOException ioe){
 		
 		}

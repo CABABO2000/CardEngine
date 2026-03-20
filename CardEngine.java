@@ -212,22 +212,23 @@ public class CardEngine{
 		while(!isdone){
 			if(answer.equals("Y")){
 				IO.println("");
-				IO.println("Card output in /output/images/ !");
+				IO.println("Card output!");
 				IO.println("= = = = = = = = = = = = = = = = =");
 				newcard.outputCardImage();
 				isdone = true;
 			}else if(answer.equals("N")){
+				IO.println("");
 				IO.println("Are you sure? This card will not be recoverable");
 				IO.print("==> ");
 				answer = console.nextLine();
 				IO.println("");
-				if(answer.equals("Y")){
+				if(answer.equals("N")){
 					IO.println("");
-					IO.println("Card output in /output/images/ !");
+					IO.println("Card output!");
 					IO.println("= = = = = = = = = = = = = = = = =");
 					newcard.outputCardImage();
 					isdone = true;
-				}else if(answer.equals("No")){
+				}else if(answer.equals("Y")){
 					IO.println("Card not output");
 					IO.println("- - - - - - - -");
 					isdone = true;
